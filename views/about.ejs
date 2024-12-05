@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nandha College</title>
+    <h2> <marquee>⚠️By submitting your complaint, you confirm that the information provided is accurate. Your complaint will be reviewed and addressed as soon as possible. Please avoid submitting sensitive personal information. We are committed to resolving your issue in line with our Privacy Policy and Terms of Service.</marquee></h2>
+
+    <header>
+        <img src="./images.jpg" alt="">
+        <div>
+            <center><h1>Nandha Engineering College</h1>
+            <p>Erode - Perundurai, Main Road, Vaikkaalmedu, Erode, Tamil Nadu 638052</p></center>
+        </div>
+    </header>
+
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and background */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #0f87e2;
+            color: #ebf4fa;
+        }
+
+        img{
+            position: absolute;
+            height: 100px;
+        }
+
+        /* Container for all sections */
+        .container {
+            align-items: center;
+            width: 20%;
+            max-width: 190px;
+            margin: 5 auto;
+        }
+
+        /* Header section */
+        header {
+            background-color: #333333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center=50%;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: #fbf6f6;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #0a42e8;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #777;
+        }
+
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .content h2 {
+            font-size: 1.8rem;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            list-style-type: disc;
+            color: #2813c4;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #073cf9;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: #ffffff;
+            margin-top: 30px;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .social-media {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-media a {
+            text-decoration: none;
+            color: #444;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+        }
+
+        .social-media a:hover {
+            color: #0982fa;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            display: none;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-btn-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .back-btn-container button {
+            background-color: #121111;
+            color: #278bdd;
+            border: 2px solid #278bdd;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-btn-container button:hover {
+            background-color: #2b33c6;
+            color: #101110;
+            transform: translateY(-5px);
+        }
+
+        .back-btn-container button:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Complaint Box</h1>
+            <form>
+                <p>Your feedback and concerns are important to us. Please use this platform to share any issues or complaints you have encountered.</p>
+        </div>
+
+        <div class="content">
+            <h2>What is the Complaint Box?</h2>
+            <p>The Complaint Box is an online tool created for you to report any grievances, issues, or feedback related to our services. We are committed to addressing all complaints in a professional, timely, and efficient manner.</p>
+
+            <h2>Why Use the Complaint Box?</h2>
+            <p>We encourage you to use the Complaint Box for the following reasons:</p>
+            <ul>
+                <li>To address and resolve any service-related issues you may have encountered.</li>
+                <li>To provide constructive feedback that will help us improve our services.</li>
+                <li>To ensure that your concerns are heard and acted upon by the right team.</li>
+            </ul>
+
+            <h2>How Does It Work?</h2>
+            <p>Submitting a complaint through the Complaint Box is quick and simple. Here's how the process works:</p>
+            <ul>
+                <li><strong>Step 1:</strong> Fill out the complaint form with your details and description of the issue.</li>
+                <li><strong>Step 2:</strong> Submit your complaint, and our team will receive a notification.</li>
+                <li><strong>Step 3:</strong> We will review your complaint and respond with an appropriate resolution within 2-3 business days.</li>
+            </ul>
+
+            <h2>Need Assistance?</h2>
+            <p>If you are having trouble submitting your complaint or need additional support, feel free to contact our customer service team at <strong>support@example.com</strong>. We are here to assist you.</p>
+            </form>
+
+            <center><a href="/student" class="btn" id="goToComplaintBtn">Go To Complaint</a></center>
+        </div>
+
+        <div class="social-media">
+            <p>Follow us on social media for updates:</p>
+            <a href="https://www.linkedin.com/in/senthil-kumar-b14b01290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://github.com/Kumar2511L" target="_blank"><i class="fab fa-github"></i> Github</a>
+        </div>
+    </div>
+
+    <!-- Loading animation overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        document.getElementById('goToComplaintBtn').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent default link behavior
+            document.getElementById('loadingOverlay').style.display = 'flex';  // Show loading spinner
+            setTimeout(function() {
+                window.location.href = '/student';  // Redirect after the loading animation
+            }, 2000);  // 2 seconds delay for loading animation
+        });
+    </script>
+</body>
+</html>

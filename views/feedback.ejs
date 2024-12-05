@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #6fa8e8, #50c9c3);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Feedback Form Styles */
+        .contact-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Animation for fading and sliding in the feedback form */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for pop-up confirmation message */
+        @keyframes popUpMessage {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form input styling */
+        .contact-box textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-box textarea:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        .contact-box button {
+            padding: 1rem 2rem;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-box button:hover {
+            background-color: #3b7bbf;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Confirmation Message Styles */
+        .confirmation-message {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: popUpMessage 0.6s ease-out forwards;
+            position: top;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .confirmation-message h2 {
+            color: #3b7bbf;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .confirmation-message p {
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        /* Loading Animation Styles */
+        .loading {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4a90e2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 1rem 0;
+        }
+
+        /* Keyframes for spinning */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Logout Button Animation */
+        .confirmation-message button {
+            background-color: #3b7bbf;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInUpButton 0.6s ease-out forwards;
+        }
+
+        /* Logout Button Hover */
+        .confirmation-message button:hover {
+            background-color: #2a5a8b;
+            transform: scale(1.05); /* Slightly increase size */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Keyframes for the LOGOUT button fade-in animation */
+        @keyframes fadeInUpButton {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 768px) {
+            .contact-box {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .confirmation-message {
+                padding: 1.5rem;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Feedback Form -->
+    <div class="contact-box" id="feedbackForm">
+        <h2>Feedback Form</h2>
+        <form action="/submitFeedback" method="post" onsubmit="return submitFeedback()">
+            <label for="feedback">Your Feedback</label>
+            <textarea id="feedback" name="feedback" placeholder="Enter your feedback" required autocomplete="off"></textarea>
+
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+    </div>
+
+    <!-- Confirmation Message (Pop-Up) -->
+    <div class="confirmation-message" id="confirmationMessage">
+        <h2>Thank you for your feedback!</h2>
+        <p>Your complaint and feedback have been successfully submitted.</p>
+       <center> <div class="loading" id="loading"></div></center>
+    </div>
+
+    <script>
+        // Function to handle feedback form submission
+        function submitFeedback() {
+            // Hide the feedback form
+            document.getElementById("feedbackForm").style.display = "none";
+            
+            // Show the confirmation message pop-up
+            document.getElementById("confirmationMessage").style.display = "block";
+            
+            // Add a delay to simulate loading before redirect
+            setTimeout(function() {
+                document.getElementById("loading").style.display = "none";  // Hide the loading animation
+                window.location.href = '/home';  // Redirect to another page (e.g., home)
+            }, 3000);  // Delay in milliseconds (3 seconds)
+
+            // Prevent form submission (for demo purposes)
+            return false;
+        }
+
+        
+    </script>
+
+</body>
+</html>

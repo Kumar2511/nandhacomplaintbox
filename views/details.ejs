@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Online Complaint Box</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, input {
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #206fde;
+            padding: 20px;
+            height: 100vh; /* Ensure full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow container to grow */
+        }
+
+        #messageSection {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .premium {
+            background-color: #FFD700; /* Gold color for premium complaints */
+            color: #333;
+        }
+
+        .classic {
+            background-color: #A9A9A9; /* Gray color for classic complaints */
+            color: #555;
+        }
+
+        .date {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .btn {
+            width: 150px;
+            background-color: #278bdd;
+            border: none;
+            outline: none;
+            height: 49px;
+            border-radius: 49px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            background-color: #4d84e2;
+        }
+
+        /* Logout Button Styling */
+        #logoutBtn {
+            position: center;
+            bottom: 30px; /* 30px from the bottom */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust to truly center the button */
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity:10;
+            transform: translateY(20px);
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Animate the button when it becomes visible */
+        #logoutBtn.visible {
+            opacity: 100;
+            transform: translateY(0);
+        }
+
+        #logoutBtn:hover {
+            background-color: #e53935;
+        }
+
+        /* Loading Modal */
+        #loadingModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #loadingModal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #loadingModal .modalContent {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        @media (max-width: 870px) {
+            .container {
+                min-height: 800px;
+                height: 100vh;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .btn {
+                width: 130px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Admin Dashboard Section -->
+        <h1>Admin Dashboard - Online Complaint Box</h1>
+
+        <!-- Message Section (Success/Failure) -->
+        <div id="messageSection"></div>
+
+        <!-- Complaints Table -->
+        <table id="complaintsTable">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Complaint</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Complaints will be populated here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Logout Button -->
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal">
+        <div class="modalContent">
+            <p>Logging out...</p>
+        </div>
+    </div>
+
+    <script>
+        // Fetch complaints data from the backend
+        async function fetchComplaints() {
+            try {
+                const response = await fetch('/api/complaints'); // API endpoint from backend
+                if (response.ok) {
+                    const complaints = await response.json();
+                    console.log(complaints); // Log complaints to inspect the structure
+
+                    const complaintsTableBody = document.querySelector('#complaintsTable tbody');
+
+                    // Clear the existing table rows
+                    complaintsTableBody.innerHTML = '';
+
+                    // Loop through the complaints and populate the table
+                    complaints.forEach(complaint => {
+                        // Create a new table row
+                        const newRow = document.createElement('tr');
+
+                        // Add class based on the type of complaint (for example, premium or classic)
+                        if (complaint.isPremium) {
+                            newRow.classList.add('premium');  // If it's a premium complaint
+                        } else {
+                            newRow.classList.add('classic');  // If it's a classic complaint
+                        }
+
+                        newRow.innerHTML = `
+                            <td>${complaint.rollNo ? complaint.rollNo : 'N/A'}</td> <!-- Use rollNo if available -->
+                            <td>${complaint.message || 'No message'}</td> <!-- Use message or fallback -->
+                            <td class="date">${new Date(complaint.createdAt).toLocaleString() || 'No date'}</td> <!-- Use createdAt and format -->
+                        `;
+                        complaintsTableBody.appendChild(newRow);
+                    });
+
+                    // Display success message
+                    const messageSection = document.getElementById('messageSection');
+                    const successMessage = document.createElement('div');
+                    successMessage.classList.add('success-message');
+                    successMessage.textContent = 'Complaints have been loaded successfully!';
+                    messageSection.appendChild(successMessage);
+
+                    // Show logout button with animation
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    logoutBtn.classList.add('visible');
+                } else {
+                    throw new Error('Failed to fetch complaints');
+                }
+            } catch (error) {
+                // Handle errors (e.g., display an error message)
+                const messageSection = document.getElementById('messageSection');
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('error-message');
+                errorMessage.textContent = `Error: ${error.message}`;
+                messageSection.appendChild(errorMessage);
+            }
+        }
+
+        // Call the function to fetch and display complaints when the page loads
+        window.onload = fetchComplaints;
+
+        // Logout function with loading modal
+        function logout() {
+            // Hide logout button with fade and scale animation
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.style.transition = 'opacity 0.5s, transform 0.5s';
+            logoutBtn.style.opacity = '0';
+            logoutBtn.style.transform = 'scale(0.5)';
+
+            // Show loading modal with fade-in animation
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.classList.add('show');
+
+            // Simulate some delay for loading (optional)
+            setTimeout(function() {
+                // After delay, redirect to the login page
+                window.location.href = '/home';
+            }, 2000); // 2-second delay before logout
+        }
+    </script>
+</body>
+</html>

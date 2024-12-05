@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nandha College</title>
+    <h3> <marquee>⚠️By submitting your complaint, you confirm that the information provided is accurate. Your complaint will be reviewed and addressed as soon as possible. Please avoid submitting sensitive personal information. We are committed to resolving your issue in line with our Privacy Policy and Terms of Service.</marquee></h3>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and background */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #0f87e2;
+            color: #ebf4fa;
+        }
+        img {
+            position: absolute;
+            height: 100px;
+        }
+
+        /* Container for all sections */
+        .container {
+            align-items: center;
+            width: 20%;
+            max-width: 190px;
+        }
+        
+        header {
+            background-color: #333333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6fa8e8, #50c9c3);
+            color: #333;
+        }
+
+        nav {
+            background-color: #20155b00;
+            display: flex;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        nav a {
+            color: rgb(22, 57, 233);
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        .contact-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 2rem;
+            margin-left: 575px;
+        }
+
+        .contact-box h2 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .contact-box label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .contact-box input[type="text"],
+        .contact-box input[type="email"],
+        .contact-box textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-box button {
+            padding: 0.8rem 1.5rem;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-box button:hover {
+            background-color: #3b7bbf;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+            animation: fadeIn 0.5s ease-out; /* Fade-in effect */
+        }
+
+        /* Keyframes for fadeIn animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Pop-up content animation */
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 400px;
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .modal button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #3b7bbf;
+        }
+
+        /* Close button */
+        .close {
+            color: #3b7bbf;
+            font-size: 88px;
+            font-weight: bold;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .contact-box button {
+            padding: 0.8rem 1.5rem;
+            background-color: #3b7bbf;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .contact-box button:hover {
+            background-color: #3b7bbf;
+            transform: translateY(-4px); /* Slight lift on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow to emphasize the hover effect */
+        }
+
+        /* Click animation (shrink button when clicked) */
+        .contact-box button:active {
+            transform: scale(0.95); /* Shrink the button on click */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Smaller shadow on click */
+        }
+
+        /* Button focus effect (when tabbed into) */
+        .contact-box button:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(72, 136, 240, 0.6); /* Add glow effect */
+        }
+
+        /* Feedback Form Submit Button animation */
+        #feedbackForm button {
+            background-color: #3b7bbf; /* Different color for feedback */
+        }
+
+        #feedbackForm button:hover {
+            background-color: #3b7bbf; /* Feedback hover color */
+            transform: translateY(-4px); /* Lift effect */
+        }
+
+        /* Additional smooth transition */
+        .contact-box button {
+            transition: all 0.3s ease;
+        }
+
+        /* Confirmation message styles */
+        .confirmation-message {
+            display: none;
+            background-color: white;
+            padding: 1rem;
+            width: 80%;
+            max-width: 500px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-btn {
+            background-color: rgb(16, 210, 244);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            background-color: rgb(16, 210, 244);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .contact-box {
+                padding: 1.5rem;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="./images.jpg" alt="">
+        <div>
+            <center><h1>Nandha Engineering College</h1>
+            <p>Erode - Perundurai, Main Road, Vaikkaalmedu, Erode, Tamil Nadu 638052</p></center>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <center>
+            <h2>Register Your Complaint Here 👇</h2>
+            <a href="/student" class="action"><i class=""></i>Student🧑‍🎓</a>
+            <a href="/faculty" class="active"><i class="fas fa-tachometer-alt"></i> Faculty👨‍🏫</a>
+            <a href="/suportstaff"><i class="fas fa-users"></i> Support Staff 👨‍🏫👨‍🏫</a>
+        </center>
+    </nav>
+
+    <div class="contact-box">
+        <h2>Faculty Complaint Box</h2>
+        <!-- Form for submitting complaint -->
+        <form action="/facultyData" method="post" onsubmit="return showPopup()">
+            <label for="name">Subject</label>
+            <input type="text" id="name" name="subject" placeholder="Subject" required autocomplete="off">
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="yourName" placeholder="Your Name" required autocomplete="off">
+
+            <label for="message">Complaint</label>
+            <textarea id="message" name="message" placeholder="Your Complaint" required autocomplete="off"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Modal for the pop-up message -->
+    <div id="popupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Your complaint has been submitted successfully!</h2>
+            <button onclick="window.location.href = '/suportstaff';">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show modal pop-up message
+        function showPopup() {
+            document.getElementById("popupModal").style.display = "block";
+            return false; // Prevent form submission to show the modal first
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("popupModal").style.display = "none";
+            // Submit the form after closing the modal
+            document.querySelector("form").submit();
+        }
+
+        // Close modal when clicked outside the modal content
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("popupModal")) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>

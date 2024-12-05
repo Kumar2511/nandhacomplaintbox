@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Online Complaint Box</title>
+    <!-- FontAwesome CDN for eye icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, input {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to left, #33ccff 0%, rgb(16, 194, 207), rgb(16, 122, 215) 95%);
+        }
+
+        .forms-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .signin-signup {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            width: 50%;
+            transition: 1s 0.7s ease-in-out;
+            display: grid;
+            grid-template-columns: 1fr;
+            z-index: 5;
+            opacity: 0; /* Initially hidden */
+            animation: slideIn 1s forwards; /* Animation to slide in */
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -50%) translateX(200px); /* Slide from */
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0rem 5rem;
+            transition: all 0.2s 0.7s;
+            overflow: hidden;
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-field {
+            max-width: 380px;
+            width: 100%;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+            height: 55px;
+            border-radius: 55px;
+            display: grid;
+            grid-template-columns: 15% 85%;
+            padding: 0 0.4rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .input-field i {
+            text-align: center;
+            line-height: 55px;
+            color: #acacac;
+            transition: 0.5s;
+            font-size: 1.1rem;
+        }
+
+        .input-field input {
+            background: none;
+            outline: none;
+            border: none;
+            line-height: 1;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+            padding: 0 10px;
+            transition: transform 0.3s ease; /* Animation when focused */
+        }
+
+        .input-field input:focus {
+            transform: scale(1.05); /* Scale effect on focus */
+        }
+
+        .btn {
+            width: 150px;
+            background-color: #278bdd;
+            border: none;
+            outline: none;
+            height: 49px;
+            border-radius: 49px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Initial shadow */
+        }
+
+        .btn:hover {
+            background-color: #4d84e2;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Shadow increases on hover */
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Pop-up message style */
+        .popup-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            display: none;
+            z-index: 10;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Error message animation */
+        #error-message {
+            color: red;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out ;
+        }
+
+        #error-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336; /* Red background for error */
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            display: none;
+            z-index: 10;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 16px solid #f3f3f3; /* Light grey background */
+            border-top: 16px solid #278bdd; /* Blue spinner */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            z-index: 11;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <h1 class="title">Admin Login</h1>
+
+                    <!-- Error message section -->
+                    <div id="error-message">Invalid username or password.</div>
+
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Enter Admin Name" required autocomplete="off"/>
+                    </div>
+
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter Admin password" required autocomplete="off"/>
+                        <!-- Show Password Eye Icon -->
+                        <i id="eye-icon" class="fas fa-eye" style="position: absolute; right: 3px; top: 3px;"></i>
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up message for successful login -->
+    <div id="popupMessage" class="popup-message">Login Successful! Redirecting to admin dashboard...</div>
+
+    <!-- Pop-up message for incorrect login -->
+    <div id="error-popup" class="popup-message">Invalid username or password. Please try again.</div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;"></div>
+
+    <script>
+        // Admin login simulation
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Get input values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Example admin credentials (in a real scenario, this would be checked via backend authentication)
+            const adminUsername = '22csl13';
+            const adminPassword = 'senthil';
+            
+            // Validate login
+            if (username === adminUsername && password === adminPassword) {
+                // Show success pop-up message
+                document.getElementById('popupMessage').style.display = 'block';
+                
+                // Show the loading spinner and hide the login form
+                document.getElementById('loadingSpinner').style.display = 'block';
+                document.querySelector('.signin-signup').style.display = 'none';
+                
+                // Redirect to dashboard after 2 seconds (allow time for the spinner)
+                setTimeout(function () {
+                    window.location.href = '/details'; // Replace with actual dashboard URL
+                }, 2000);
+            } else {
+                // Show error pop-up message
+                document.getElementById('error-popup').style.display = 'block';
+                
+                // Hide error message after 2 seconds
+                setTimeout(function () {
+                    document.getElementById('error-popup').style.display = 'none';
+                }, 2000);
+            }
+        });
+
+        // Show/Hide password functionality with eye icon
+        document.getElementById('eye-icon').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const icon = document.getElementById('eye-icon');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+
+</body>
+</html>
